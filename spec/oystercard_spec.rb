@@ -4,6 +4,8 @@ require "oystercard.rb"
 # ErrorLineNumber: # ./spec/oystercard_spec.rb:3:in `<top (required)>'
 describe Oystercard do
 
+  let( :station ) { double "fake station" }
+
   it 'has a balance of zero' do
     expect(subject.balance).to eq(0)
   end
@@ -45,29 +47,40 @@ describe Oystercard do
   end
   
   describe ' #touch_in' do
+    
     it "can touch in" do
+      allow(station).to receive(:name) {"Brixton"}
       subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      subject.touch_in
+      subject.touch_in(station)
       expect(subject).to be_in_journey
     end
 
     context "brings up an error" do
       it "if funds less the minimum" do
-        expect{subject.touch_in}.to raise_error("Insufficient balance to touch in")
+        expect{subject.touch_in(station)}.to raise_error("Insufficient balance to touch in")
       end
     end
+
+    it 'can recall the station that we touched in at' do
+      allow(station).to receive(:name) {"Brixton"}
+      subject.top_up(Oystercard::MAXIMUM_BALANCE)
+      subject.touch_in(station)
+      expect(subject.entry_station).to eq "Brixton"
+    end 
   end
 
   describe ' #touch_out' do
     it "can touch out" do
+      allow(station).to receive(:name) {"Brixton"}
       subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      subject.touch_in
+      subject.touch_in(station)
       subject.touch_out
       expect(subject).to_not be_in_journey
     end
     it "reduces " do
+      allow(station).to receive(:name) {"Brixton"}
       subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      subject.touch_in
+      subject.touch_in(station)
       expect{subject.touch_out}.to change{subject.balance}.by(-Oystercard::MINIMUM_FEE)
     end
   end
