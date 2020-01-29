@@ -25,17 +25,6 @@ describe Oystercard do
     end
   end
 
-  # describe ' #deduct' do
-  #   context 'to respond to one argument' do
-  #     it { is_expected.to respond_to(:deduct).with(1).argument }
-  #   end
-
-  #   it 'to decrease balance by argument value' do
-  #     expect{subject.deduct(5)}.to change{subject.balance}.by(-5)
-  #   end
-
-  # end
-
   describe ' #in_journey?' do
     it 'exists' do
       expect(subject).to respond_to(:in_journey?)
@@ -44,10 +33,18 @@ describe Oystercard do
     it "initially not in journey" do
       expect(subject).to_not be_in_journey
     end
+    
+    it "after touch in is not equal to nil" do
+      allow(station).to receive(:name) {"Brixton"}
+      subject.top_up(Oystercard::MAXIMUM_BALANCE)
+      subject.touch_in(station)
+      expect(subject).to be_in_journey
+    end
+
   end
   
   describe ' #touch_in' do
-    
+
     it "can touch in" do
       allow(station).to receive(:name) {"Brixton"}
       subject.top_up(Oystercard::MAXIMUM_BALANCE)
@@ -70,18 +67,23 @@ describe Oystercard do
   end
 
   describe ' #touch_out' do
+
+  before(:example) do
+    allow(station).to receive(:name) {"Brixton"}
+    subject.top_up(Oystercard::MAXIMUM_BALANCE)
+    subject.touch_in(station)
+  end
+
     it "can touch out" do
-      allow(station).to receive(:name) {"Brixton"}
-      subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      subject.touch_in(station)
       subject.touch_out
       expect(subject).to_not be_in_journey
     end
     it "reduces " do
-      allow(station).to receive(:name) {"Brixton"}
-      subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      subject.touch_in(station)
       expect{subject.touch_out}.to change{subject.balance}.by(-Oystercard::MINIMUM_FEE)
+    end
+    it "returns no value for touch in station" do
+      subject.touch_out
+      expect(subject.entry_station).to eq nil
     end
   end
   
