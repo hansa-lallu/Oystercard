@@ -61,7 +61,7 @@ describe Oystercard do
     it 'can recall the station that we touched in at' do
       allow(station).to receive(:name) {"Brixton"}
       subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      subject.touch_in(station)
+      subject.touch_in(station.name)
       expect(subject.entry_station).to eq "Brixton"
     end 
   end
@@ -71,7 +71,7 @@ describe Oystercard do
   before(:example) do
     allow(station).to receive(:name) {"Brixton"}
     subject.top_up(Oystercard::MAXIMUM_BALANCE)
-    subject.touch_in(station)
+    subject.touch_in(station.name)
   end
 
     it "can touch out" do
