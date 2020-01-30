@@ -5,9 +5,9 @@ require "oystercard.rb"
 describe Oystercard do
 
   let( :station ) { double "fake station" }
-  let( :entry_station) { double :station }
-  let( :exit_station) { double :station }
-  let( :journey ) { {entry_station: entry_station, exit_station: exit_station} }
+  let( :entry_station) { double "Brixton" }
+  let( :exit_station) { double "Liverpool Street" }
+  let( :journey ) { {entry_station: station, exit_station: station} }
  
   it 'has a balance of zero' do
     expect(subject.balance).to eq(0)
@@ -106,8 +106,8 @@ describe Oystercard do
 
     it 'checks that our journey has been stored' do
       subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      subject.touch_in(entry_station)
-      subject.touch_out(exit_station)
+      subject.touch_in(station)
+      subject.touch_out(station)
       expect(subject.journey).to include journey
     end 
   end   
