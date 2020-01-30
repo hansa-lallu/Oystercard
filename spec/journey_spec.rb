@@ -28,13 +28,13 @@ describe Journey do
 
   it "returns a penalty fare if no exit station given" do
     subject.start("Aldgate")
-    expect(subject.fare).to eq Journey::PENALTY_FARE
+    expect(subject.calculate).to eq Journey::PENALTY_FARE
   end
 
   it "returns a fare if an entry station and exit station is given" do
     subject.start("Aldgate")
     subject.finish("west Hampstead")
-    expect(subject.fare).to eq 1
+    expect(subject.calculate).to eq 1
   end
   
 end
