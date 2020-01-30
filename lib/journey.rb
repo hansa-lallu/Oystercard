@@ -8,7 +8,7 @@ class Journey
   def initialize
     @entry_station = nil
     @exit_station = nil 
-    @fare = 1
+    # @fare = MINIMUM_FARE
   end
 
   def start(station)
@@ -19,16 +19,16 @@ class Journey
     @exit_station = station
   end
 
-  def fare
-    @fare
-  end
+  # def fare
+  #   @fare
+  # end
 
   def complete?
     @entry_station && @exit_station ? :true : false 
   end
 
   def calculate 
-    @entry_station && @exit_station ? 1 : PENALTY_FARE
+    @entry_station && @exit_station ? MINIMUM_FARE : PENALTY_FARE
   end
 
 end
