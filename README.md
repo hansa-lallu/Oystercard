@@ -110,6 +110,6 @@ This programme was built using Pair Programming and Test Driven Development. I w
 
 ## Project Status ##
 
-- Incomplete Finished Step 14/16
+- Incomplete: Finished Step 14/16
 - Update Readme including example/usage
 - Refactor Code 
