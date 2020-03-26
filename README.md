@@ -76,10 +76,32 @@ I need to have the correct fare calculated
 
 - This program is run on ruby within a REPL such as irb or pry. 
 
+Example
 ``` 
 $ irb
-> require './lib/oystercard.rb'
-> oystercard = Oystercard.new
+2.7.0 :001 > require './lib/oystercard.rb'
+ => true 
+2.7.0 :002 > oystercard = Oystercard.new
+2.7.0 :003 > oystercard.top_up(50)
+ => 50 
+2.7.0 :004 > oystercard.touch_in("Aldgate")
+ => "Aldgate" 
+2.7.0 :005 > oystercard.in_journey?
+ => true 
+2.7.0 :006 > oystercard.touch_out("West Hampstead")
+ => nil 
+2.7.0 :007 > oystercard.in_journey?
+ => false 
+2.7.0 :008 > oystercard.balance
+ => 48
+ 2.7.0 :009 > oystercard.top_up(150)
+Traceback (most recent call last):
+        5: from /Users/hansa/.rvm/rubies/ruby-2.7.0/bin/irb:23:in `<main>'
+        4: from /Users/hansa/.rvm/rubies/ruby-2.7.0/bin/irb:23:in `load'
+        3: from /Users/hansa/.rvm/rubies/ruby-2.7.0/lib/ruby/gems/2.7.0/gems/irb-1.2.1/exe/irb:11:in `<top (required)>'
+        2: from (irb):9
+        1: from /Users/hansa/makers/week2/Oystercard-final/Oystercard/lib/oystercard.rb:16:in `top_up'
+RuntimeError (Maximum balance of 90 exceeded)
 ```
 
 ## How I built it ##
