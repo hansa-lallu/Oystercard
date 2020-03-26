@@ -1,4 +1,4 @@
-## Oystercard Challenge ##
+# Oystercard Challenge #
 
 Week 2 Challenge - Replicate the London Oystercard system which can be used on TFL services.\
 Build on the Object Oriented Programming principles used in week 1 to improve knowledge of Ruby and TDD.
